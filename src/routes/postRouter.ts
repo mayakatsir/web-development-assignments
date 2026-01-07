@@ -1,12 +1,13 @@
 import { Router } from 'express';
+import postController from '../controllers/postController';
 
 const postRouter = Router();
 
-postRouter.post('/', () =>{console.log('Create a new post')});
+postRouter.post('/', postController.createPost);
 
 postRouter.get('/',() =>console.log('get  post') );
 
-postRouter.get('/:id',() =>{console.log('get  id post')} );
+postRouter.get('/:id',postController.getPostById );
 
 postRouter.put('/:id', () =>{console.log('update post')});
 

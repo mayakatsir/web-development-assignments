@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import PostRepository from '../repositories/postRepository';
+import { isValidObjectId } from 'mongoose';
 
 class PostController {
     async createPost(req: Request, res: Response) {
@@ -18,6 +19,25 @@ class PostController {
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+
+    async getPostById(req: Request, res: Response){
+    const { id } = req.params;
+
+    if (!isValidObjectId(id)) {
+        res.status(400).send({ message: `id: ${id} is not valid` });
+        return;
+    }
+
+    const post = await PostRepository.getPostById(id);
+    if (!post) {
+        res.status(404).send({ message: `didn't find post with id: ${id}` });
+        return;
+    }
+
+    res.status(200).send({ post });
 }
+  }
+
 
 export default new PostController();

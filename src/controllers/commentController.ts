@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { isValidObjectId } from 'mongoose';
 import commentRepository from '../repositories/commentRepository';
-import { getPostById } from '../repositories/postRepository';
+import postRepository from '../repositories/postRepository';
 
 class CommentController {
     async createComment(req: Request, res: Response) {
@@ -16,7 +16,7 @@ class CommentController {
                 return res.status(400).json({ message: `Invalid postID: ${postID} param` });
             }
 
-            if (!(await getPostById(postID))) {
+            if (!(await postRepository.getPostById(postID))) {
                 return res.status(400).json({ message: `Non existent post with id: ${postID}` });
             }
 
