@@ -1,15 +1,15 @@
 import { Router } from 'express';
 
-const postsRouter = Router();
+const postRouter = Router();
 
-postsRouter.post('/', () =>{console.log('Create a new post')});
+postRouter.post('/', () =>{console.log('Create a new post')});
 
-postsRouter.get('/',() =>console.log('get  post') );
+postRouter.get('/',() =>console.log('get  post') );
 
-postsRouter.get('/:id',() =>{console.log('get  id post')} );
+postRouter.get('/:id',() =>{console.log('get  id post')} );
 
-postsRouter.put('/:id', () =>{console.log('update post')});
+postRouter.put('/:id', () =>{console.log('update post')});
 
-postsRouter.delete('/:id',() =>{console.log('delete post')} );
+postRouter.delete('/:id',() =>{console.log('delete post')} );
 
-export default postsRouter;
+export default postRouter;
