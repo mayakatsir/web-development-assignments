@@ -1,29 +1,29 @@
 import { Router } from 'express';
 
-const CommentsRouter = Router();
+const commentsRouter = Router();
 
-CommentsRouter.post('/', () => {
+commentsRouter.post('/', () => {
     console.log('Create a new comment');
 });
 
-CommentsRouter.get('/', () => {
+commentsRouter.get('/', () => {
     console.log('Get all comments');
 });
 
-CommentsRouter.get('/:id', () => {
+commentsRouter.get('/:id', () => {
     console.log('Get comment by ID');
 });
 
-CommentsRouter.get('/post/:postId', () => {
+commentsRouter.get('/post/:postId', () => {
     console.log('Get all comments for post');
 });
 
-CommentsRouter.put('/:id', () => {
+commentsRouter.put('/:id', () => {
     console.log('Update comment by ID');
 });
 
-CommentsRouter.delete('/:id', () => {
+commentsRouter.delete('/:id', () => {
     console.log('Delete comment by ID');
 });
 
-export default CommentsRouter;
+export default commentsRouter;
