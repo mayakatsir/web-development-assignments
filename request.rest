@@ -8,7 +8,7 @@
 
 
 ########POSTS###########
-#Create new post
+###Create new post
 POST {{baseUrl}}/post
 Content-Type: application/json
 {
@@ -17,16 +17,16 @@ Content-Type: application/json
   "sender": {{senderId}}
 }
 
-#Get all posts
+###Get all posts
 GET {{baseUrl}}/post
 
-#Get post by id
+###Get post by id
 GET {{baseUrl}}/post/{{postId}}
 
-#Get posts by sender id
+###Get posts by sender id
 GET {{baseUrl}}/post?sender={{senderId}}
 
-#Update post by id
+###Update post by id
 PUT {{baseUrl}}/post/{{postId}}
 Content-Type: application/json
 {
@@ -39,7 +39,7 @@ Content-Type: application/json
 
 #######COMMENTS##########
 ### Create a new comment
-POST {{baseUrl}}/comments
+POST {{baseUrl}}/comment
 Content-Type: application/json
 {
   "postId": {{postId}},
@@ -47,17 +47,17 @@ Content-Type: application/json
   "text": "a comment"
 }
 
-### Get all comments
-GET {{baseUrl}}/comments
+### Get all comment
+GET {{baseUrl}}/comment
 
 ### Get comment by id
-GET {{baseUrl}}/comments/{{commentId}}
+GET {{baseUrl}}/comment/{{commentId}}
 
-### Get comments for a specific post
-GET {{baseUrl}}/comments?postId={{postId}}
+### Get comment for a specific post
+GET {{baseUrl}}/comment?postId={{postId}}
 
 ### Update a comment
-PUT {{baseUrl}}/comments/{{commentId}}
+PUT {{baseUrl}}/comment/{{commentId}}
 Content-Type: application/json
 {
   "postId": {{postId}},
@@ -66,4 +66,4 @@ Content-Type: application/json
 }
 
 # Delete a comment
-DELETE {{baseUrl}}/comments/{{commentId}}
+DELETE {{baseUrl}}/comment/{{commentId}}
