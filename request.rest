@@ -1,0 +1,69 @@
+@baseUrl = http://localhost:8080
+
+### Variables
+@postId = 10
+@senderId = 10
+@commentId = 1
+@userId = 5
+
+
+########POSTS###########
+#Create new post
+POST {{baseUrl}}/post
+Content-Type: application/json
+{
+  "title": "first post",
+  "body": "karenush",
+  "sender": {{senderId}}
+}
+
+#Get all posts
+GET {{baseUrl}}/post
+
+#Get post by id
+GET {{baseUrl}}/post/{{postId}}
+
+#Get posts by sender id
+GET {{baseUrl}}/post?sender={{senderId}}
+
+#Update post by id
+PUT {{baseUrl}}/post/{{postId}}
+Content-Type: application/json
+{
+  "title": "updated title",
+  "body": "mayush",
+  "sender": {{senderId}}
+}
+
+
+
+#######COMMENTS##########
+### Create a new comment
+POST {{baseUrl}}/comments
+Content-Type: application/json
+{
+  "postId": {{postId}},
+  "userId": {{userId}},
+  "text": "a comment"
+}
+
+### Get all comments
+GET {{baseUrl}}/comments
+
+### Get comment by id
+GET {{baseUrl}}/comments/{{commentId}}
+
+### Get comments for a specific post
+GET {{baseUrl}}/comments?postId={{postId}}
+
+### Update a comment
+PUT {{baseUrl}}/comments/{{commentId}}
+Content-Type: application/json
+{
+  "postId": {{postId}},
+  "userId": {{userId}},
+  "text": "another comment"
+}
+
+# Delete a comment
+DELETE {{baseUrl}}/comments/{{commentId}}
