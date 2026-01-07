@@ -3,28 +3,32 @@ import { isValidObjectId } from 'mongoose';
 import { createComment } from '../repositories/commentRepository';
 import { getPostById } from '../repositories/postRepository';
 
-export const createCommentController = async (req: Request, res: Response) => {
-  try {
-    const { sender, content, postID } = req.body;
+class CommentController {
+    async post(req: Request, res: Response) {
+        try {
+            const { sender, content, postID } = req.body;
 
-    if (!sender || !postID) {
-      return res.status(400).json({ message: 'Sender or postID is missing from body params' });
+            if (!sender || !postID) {
+                return res.status(400).json({ message: 'Sender or postID is missing from body params' });
+            }
+
+            if (!isValidObjectId(postID)) {
+                return res.status(400).json({ message: `Invalid postID: ${postID} param` });
+            }
+
+            if (!(await getPostById(postID))) {
+                return res.status(400).json({ message: `Non existent post with id: ${postID}` });
+            }
+
+            const comment = await createComment({ sender, content, postID });
+
+            return res.status(201).json(comment);
+        } catch (err) {
+            console.error('Error creating comment', err);
+
+            return res.status(500).json({ message: 'Internal server error' });
+        }
     }
+}
 
-    if (!isValidObjectId(postID)) {
-      return res.status(400).json({ message: `Invalid postID: ${postID} param` });
-    }
-
-    if (!(await getPostById(postID))) {
-      return res.status(400).json({ message: `Non existent post with id: ${postID}` });
-    }
-
-    const comment = await createComment({ sender, content, postID });
-
-    return res.status(201).json(comment);
-  } catch (err) {
-    console.error('Error creating comment', err);
-
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};
+export default new CommentController();
