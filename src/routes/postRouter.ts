@@ -1,10 +1,12 @@
-import { Router } from 'express';
-
+import { Request, Router } from 'express';
+import { postController } from '../controllers/postController'
 const postRouter = Router();
 
 postRouter.post('/', () =>{console.log('Create a new post')});
 
-postRouter.get('/',() =>console.log('get  post') );
+postRouter.get('/', async (req: Request<{}, {}, {}, Record<string, string | undefined>>, res) => 
+    await postController.getAllPosts(req, res) 
+);
 
 postRouter.get('/:id',() =>{console.log('get  id post')} );
 
