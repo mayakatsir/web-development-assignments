@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:8080
 
 ### Variables
-@postId = 10
+@postId = 695e919a0a3bd080b14db9ff
 @senderId = 10
 @commentId = 1
 @userId = 5
@@ -11,6 +11,7 @@
 ###Create new post
 POST {{baseUrl}}/post
 Content-Type: application/json
+
 {
   "title": "first post",
   "body": "karenush",
