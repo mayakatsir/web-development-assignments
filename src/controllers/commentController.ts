@@ -29,6 +29,28 @@ class CommentController {
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    async updateComment(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const { content } = req.body;
+
+            if (!isValidObjectId(id)) {
+                return res.status(400).json({ message: `Invalid comment ID: ${id}` });
+            }
+
+            const updatedComment = await commentRepository.updateComment(id, { content });
+            
+            if (!updatedComment) {
+                return res.status(404).json({ message: `Comment with ID: ${id} not found` });
+            }
+
+            return res.status(200).json(updatedComment);
+        } catch (err) {
+            console.error('Error updating comment', err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 }
 
 export default new CommentController();

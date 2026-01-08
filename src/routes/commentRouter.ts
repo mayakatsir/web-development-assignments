@@ -18,9 +18,7 @@ commentRouter.get('/post/:postId', () => {
     console.log('Get all comments for post');
 });
 
-commentRouter.put('/:id', () => {
-    console.log('Update comment by ID');
-});
+commentRouter.put('/:id', commentController.updateComment);
 
 commentRouter.delete('/:id', () => {
     console.log('Delete comment by ID');
