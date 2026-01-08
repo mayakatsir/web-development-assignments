@@ -1,11 +1,11 @@
-import { Router } from 'express';
-import postController from '../controllers/postController';
+import { Router , Request} from 'express';
+import {postController} from '../controllers/postController';
 
 const postRouter = Router();
 
 postRouter.post('/', postController.createPost);
 
-postRouter.get('/',() =>console.log('get  post') );
+postRouter.get('/', postController.getAllPosts);
 
 postRouter.get('/:id',postController.getPostById );
 

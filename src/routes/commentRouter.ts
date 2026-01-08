@@ -3,7 +3,7 @@ import commentController from '../controllers/commentController';
 
 export const commentRouter = Router();
 
-commentRouter.post('/', commentController.createComment);
+commentRouter.post('/', async (req, res) => await commentController.createComment(req, res));
 
 
 commentRouter.get('/', () => {
