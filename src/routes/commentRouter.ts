@@ -22,8 +22,6 @@ commentRouter.put('/:id', () => {
     console.log('Update comment by ID');
 });
 
-commentRouter.delete('/:id', () => {
-    console.log('Delete comment by ID');
-});
+commentRouter.delete('/:id', async (req, res) => await commentController.deleteCommentById(req, res));
 
 export default commentRouter;
