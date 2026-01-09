@@ -28,7 +28,19 @@ class CommentController {
 
             return res.status(500).json({ message: 'Internal server error' });
         }
-    }
+    };
+
+    async getAllComments(req: Request, res: Response) {
+        try {
+            const comments = await commentRepository.getAllComments();
+
+            return res.status(200).json({ comments });
+        } catch (err) {
+            console.error('Failed fetching all comments', err);
+
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    } 
 }
 
 export default new CommentController();
