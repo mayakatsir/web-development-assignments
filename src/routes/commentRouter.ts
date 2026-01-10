@@ -12,9 +12,7 @@ commentRouter.get('/', () => {
 
 commentRouter.get('/:id', commentController.getCommentById);
 
-commentRouter.get('/post/:postId', () => {
-    console.log('Get all comments for post');
-});
+commentRouter.get('/post/:postId', commentController.getCommentsByPostId);
 
 commentRouter.put('/:id', () => {
     console.log('Update comment by ID');
