@@ -16,6 +16,15 @@ class PostRepository {
     return await postModel.find(filters).select('-__v');
   };
 
+  async updatePost(id: string, title?: string, content?: string, author?: string) {
+    const updateData: Partial<Post> = {};
+
+    if (title !== undefined) updateData.title = title;
+    if (content !== undefined) updateData.content = content;
+    if (author !== undefined) updateData.author = author ;
+
+    await postModel.findByIdAndUpdate(id, updateData);
+  }
 }
 
 export default new PostRepository();
