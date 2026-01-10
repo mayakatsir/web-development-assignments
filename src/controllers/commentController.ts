@@ -6,21 +6,21 @@ import postRepository from '../repositories/postRepository';
 class CommentController {
     async createComment(req: Request, res: Response) {
         try {
-            const { sender, content, postID } = req.body;
+            const { sender, content, postId } = req.body;
 
-            if (!sender || !postID) {
-                return res.status(400).json({ message: 'Sender or postID is missing from body params' });
+            if (!sender || !postId) {
+                return res.status(400).json({ message: 'Sender or postId is missing from body params' });
             }
 
-            if (!isValidObjectId(postID)) {
-                return res.status(400).json({ message: `Invalid postID: ${postID} param` });
+            if (!isValidObjectId(postId)) {
+                return res.status(400).json({ message: `Invalid postId: ${postId} param` });
             }
 
-            if (!(await postRepository.getPostById(postID))) {
-                return res.status(400).json({ message: `Non existent post with id: ${postID}` });
+            if (!(await postRepository.getPostById(postId))) {
+                return res.status(400).json({ message: `Non existent post with id: ${postId}` });
             }
 
-            const comment = await commentRepository.createComment({ sender, content, postID });
+            const comment = await commentRepository.createComment({ sender, content, postId: postId });
 
             return res.status(200).json(comment);
         } catch (err) {
