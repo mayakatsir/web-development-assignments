@@ -16,8 +16,6 @@ commentRouter.get('/post/:postId', commentController.getCommentsByPostId);
 
 commentRouter.put('/:id', commentController.updateComment);
 
-commentRouter.delete('/:id', () => {
-    console.log('Delete comment by ID');
-});
+commentRouter.delete('/:id', async (req, res) => await commentController.deleteCommentById(req, res));
 
 export default commentRouter;

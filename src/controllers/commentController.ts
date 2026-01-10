@@ -22,9 +22,27 @@ class CommentController {
 
             const comment = await commentRepository.createComment({ sender, content, postID });
 
-            return res.status(201).json(comment);
+            return res.status(200).json(comment);
         } catch (err) {
             console.error('Error creating comment', err);
+
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+
+    async deleteCommentById(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+
+            if (!isValidObjectId(id)) {
+                return res.status(400).json({ message: `Invalid comment ID: ${id}` });
+            }
+
+            await commentRepository.deleteCommentById(id);
+
+            return res.status(200).json({ message: `Successfully deleted comment ${id}` });
+        } catch (err) {
+            console.error('Failed deleting comment', err);
 
             return res.status(500).json({ message: 'Internal server error' });
         }
@@ -90,5 +108,5 @@ class CommentController {
     }
 
 }
-
+ 
 export default new CommentController();
