@@ -40,6 +40,23 @@ class CommentController {
         const comments = await commentRepository.getCommentsByPostId(postId);
         return res.status(200).json({ comments });
     }   
+  
+    async getCommentById(req: Request, res: Response) {
+        const { id } = req.params;
+         
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: `Invalid id: ${id} param` });
+        }   
+
+        const comment = await commentRepository.getCommentById(id);
+
+        if (!comment) {
+            return  res.status(404).json({ message: `Comment with id: ${id} not found` });
+        }
+        
+        return res.status(200).json(comment);
+    }
+
 }
 
 export default new CommentController();

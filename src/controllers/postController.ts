@@ -44,8 +44,26 @@ class PostController {
             console.error('Failed getting all posts', err);
         }
     };
-}
-  
 
+    async updatePost(req: Request, res: Response) {
+        const { id } = req.params;
+        const { title, content, author } = req.body;
+
+        if (!isValidObjectId(id)) {
+            res.status(400).send({ message: `id: ${id} is not valid` });
+            return;
+        }
+
+        const post = await PostRepository.getPostById(id);
+        if (!post) {
+            res.status(404).send({ message: `didn't find post with id: ${id}` });
+            return;
+        }
+
+        await PostRepository.updatePost(id, title, content, author);
+        res.status(200).send({ message: 'Post updated successfully' });
+    };
+
+}
 
 export const postController = new PostController();

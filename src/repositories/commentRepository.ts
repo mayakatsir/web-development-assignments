@@ -6,6 +6,14 @@ class CommentRepository {
   async getCommentsByPostId(postId: string) {
     return await commentModel.find({ postID: postId });   
   }
+  
+  async createComment(comment: Comment) {
+    await commentModel.create(comment);
+}
+
+    async getCommentById(id: string) {
+        return await commentModel.findById(id);
+    }
 }
 
 export default new CommentRepository();
