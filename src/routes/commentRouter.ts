@@ -5,10 +5,7 @@ export const commentRouter = Router();
 
 commentRouter.post('/', commentController.createComment);
 
-
-commentRouter.get('/', () => {
-    console.log('Get all comments');
-});
+commentRouter.get('/', async (req, res) => await commentController.getAllComments(req, res));
 
 commentRouter.get('/:id', commentController.getCommentById);
 

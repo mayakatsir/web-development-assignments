@@ -9,6 +9,10 @@ class CommentRepository {
         return await commentModel.findByIdAndUpdate(id, updatedFields, { new: true }).select('-__v');
     }
 
+    async getAllComments() {
+        return await commentModel.find().select('-__v');
+    }
+
     async getCommentsByPostId(postId: string) {
         return await commentModel.find({ postID: postId });
     }
