@@ -14,7 +14,7 @@ Content-Type: application/json
 {
   "title": "first post",
   "content": "balaaaaa",
-  "sender": {{userId}}
+  "sender": "{{userId}}"
 }
 
 ###Get all posts
@@ -33,7 +33,7 @@ Content-Type: application/json
 {
   "title": "updated title",
   "content": "mayush",
-  "sender": {{userId}}
+  "sender": "{{userId}}"
 }
 
 ###Delete post by id
@@ -47,8 +47,8 @@ POST {{baseUrl}}/comment
 Content-Type: application/json
 
 {
-  "postId": {{postId}},
-  "sender": {{userId}},
+  "postId": "{{postId}}",
+  "sender": "{{userId}}",
   "content": "a comment"
 }
 
@@ -66,8 +66,8 @@ PUT {{baseUrl}}/comment/{{commentId}}
 Content-Type: application/json
 
 {
-  "postId": {{postId}},
-  "sender": {{userId}},
+  "postId": "{{postId}}",
+  "sender": "{{userId}}",
   "content": "another comment"
 }
 
