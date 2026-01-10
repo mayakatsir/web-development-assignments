@@ -1,8 +1,7 @@
 @baseUrl = http://localhost:8080
 
 ### Variables
-@postId = 695e919a0a3bd080b14db9ff
-@senderId = 10
+@postId = 69624b15206a5ed5ffa9a551
 @commentId = 1
 @userId = 5
 
@@ -14,8 +13,8 @@ Content-Type: application/json
 
 {
   "title": "first post",
-  "body": "karenush",
-  "sender": {{senderId}}
+  "content": "balaaaaa",
+  "sender": {{userId}}
 }
 
 ###Get all posts
@@ -25,16 +24,20 @@ GET {{baseUrl}}/post
 GET {{baseUrl}}/post/{{postId}}
 
 ###Get posts by sender id
-GET {{baseUrl}}/post?sender={{senderId}}
+GET {{baseUrl}}/post?sender={{userId}}
 
 ###Update post by id
 PUT {{baseUrl}}/post/{{postId}}
 Content-Type: application/json
+
 {
   "title": "updated title",
-  "body": "mayush",
-  "sender": {{senderId}}
+  "content": "mayush",
+  "sender": {{userId}}
 }
+
+###Delete post by id
+DELETE {{baseUrl}}/post/{{postId}}  
 
 
 
@@ -42,10 +45,11 @@ Content-Type: application/json
 ### Create a new comment
 POST {{baseUrl}}/comment
 Content-Type: application/json
+
 {
   "postId": {{postId}},
-  "userId": {{userId}},
-  "text": "a comment"
+  "sender": {{userId}},
+  "content": "a comment"
 }
 
 ### Get all comment
@@ -60,11 +64,12 @@ GET {{baseUrl}}/comment?postId={{postId}}
 ### Update a comment
 PUT {{baseUrl}}/comment/{{commentId}}
 Content-Type: application/json
+
 {
   "postId": {{postId}},
-  "userId": {{userId}},
-  "text": "another comment"
+  "sender": {{userId}},
+  "content": "another comment"
 }
 
-# Delete a comment
+### Delete a comment
 DELETE {{baseUrl}}/comment/{{commentId}}

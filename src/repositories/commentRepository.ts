@@ -14,7 +14,7 @@ class CommentRepository {
     }
 
     async getCommentsByPostId(postId: string) {
-        return await commentModel.find({ postID: postId });
+        return await commentModel.find({ postId: postId });
     }
 
     async getCommentById(id: string) {

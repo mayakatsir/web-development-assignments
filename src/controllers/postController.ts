@@ -21,33 +21,8 @@ class PostController {
 
 
     async getPostById(req: Request, res: Response){
-    const { id } = req.params;
-
-    if (!isValidObjectId(id)) {
-        res.status(400).send({ message: `id: ${id} is not valid` });
-        return;
-    }
-
-    const post = await PostRepository.getPostById(id);
-    if (!post) {
-        res.status(404).send({ message: `didn't find post with id: ${id}` });
-        return;
-    }
-
-    res.status(200).send({ post });
-    };
-    
-    async getAllPosts(req: Request<{}, {}, {}, Record<string, string | undefined>>, res: Response) {
-        try {
-            res.status(200).send({ posts: await PostRepository.getAllPosts(req.query) });
-        } catch (err) {
-            console.error('Failed getting all posts', err);
-        }
-    };
-
-    async updatePost(req: Request, res: Response) {
+    try{
         const { id } = req.params;
-        const { title, content, author } = req.body;
 
         if (!isValidObjectId(id)) {
             res.status(400).send({ message: `id: ${id} is not valid` });
@@ -60,9 +35,68 @@ class PostController {
             return;
         }
 
-        await PostRepository.updatePost(id, title, content, author);
-        res.status(200).send({ message: 'Post updated successfully' });
+        res.status(200).send({ post });
+    } catch (err) {
+        console.error('Error getting post by id', err);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
     };
+    
+    async getAllPosts(req: Request<{}, {}, {}, Record<string, string | undefined>>, res: Response) {
+        try {
+            res.status(200).send({ posts: await PostRepository.getAllPosts(req.query) });
+        } catch (err) {
+            console.error('Failed getting all posts', err);
+        }
+    };
+
+    async updatePost(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const { title, content, sender } = req.body;
+
+            if (!isValidObjectId(id)) {
+                res.status(400).send({ message: `id: ${id} is not valid` });
+                return;
+            }
+
+            const post = await PostRepository.getPostById(id);
+            if (!post) {
+                res.status(404).send({ message: `didn't find post with id: ${id}` });
+                return;
+            }
+
+            await PostRepository.updatePost(id, title, content, sender);
+            res.status(200).send({ message: 'Post updated successfully' });
+        } catch (err) {
+            console.error('Error updating post', err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    };
+
+    async deletePostById(req: Request, res: Response) {
+        try {
+            const { id } = req.params;   
+
+            if (!isValidObjectId(id)) {
+                res.status(400).send({ message: `id: ${id} is not valid` });
+                return;
+            }
+
+            const post = await PostRepository.getPostById(id);
+
+            if (!post) {
+                res.status(404).send({ message: `didn't find post with id: ${id}` });
+                return;
+            }   
+
+            await PostRepository.deletePostById(id);
+            res.status(200).send({ message: 'Post deleted successfully' });
+        } catch (err) {
+            console.error('Error deleting post', err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 
 }
 

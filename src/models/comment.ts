@@ -1,7 +1,7 @@
 import { InferSchemaType, Schema, model } from 'mongoose';
 
 const commentSchema = new Schema({
-    postID: { 
+    postId: { 
         type: Schema.Types.ObjectId, 
         ref: 'post', 
         required: true
