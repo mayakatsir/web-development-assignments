@@ -9,7 +9,7 @@ postRouter.get('/', postController.getAllPosts);
 
 postRouter.get('/:id',postController.getPostById );
 
-postRouter.put('/:id', () =>{console.log('update post')});
+postRouter.put('/:id', postController.updatePost );
 
 postRouter.delete('/:id',() =>{console.log('delete post')} );
 

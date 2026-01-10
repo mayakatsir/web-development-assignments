@@ -3,24 +3,18 @@ import commentController from '../controllers/commentController';
 
 export const commentRouter = Router();
 
-commentRouter.post('/', async (req, res) => await commentController.createComment(req, res));
+commentRouter.post('/', commentController.createComment);
 
 
 commentRouter.get('/', () => {
     console.log('Get all comments');
 });
 
-commentRouter.get('/:id', () => {
-    console.log('Get comment by ID');
-});
+commentRouter.get('/:id', commentController.getCommentById);
 
-commentRouter.get('/post/:postId', () => {
-    console.log('Get all comments for post');
-});
+commentRouter.get('/post/:postId', commentController.getCommentsByPostId);
 
-commentRouter.put('/:id', () => {
-    console.log('Update comment by ID');
-});
+commentRouter.put('/:id', commentController.updateComment);
 
 commentRouter.delete('/:id', async (req, res) => await commentController.deleteCommentById(req, res));
 
