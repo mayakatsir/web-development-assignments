@@ -9,7 +9,7 @@ const postSchema = new Schema({
     type: String,
     required: true
 },
-  author: { 
+  sender: { 
     type: String,
     required: true 
 },

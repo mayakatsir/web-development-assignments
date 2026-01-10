@@ -11,6 +11,6 @@ postRouter.get('/:id',postController.getPostById );
 
 postRouter.put('/:id', postController.updatePost );
 
-postRouter.delete('/:id',() =>{console.log('delete post')} );
+postRouter.delete('/:id',postController.deletePostById );
 
 export default postRouter;

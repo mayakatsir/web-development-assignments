@@ -2,7 +2,6 @@
 
 ### Variables
 @postId = 695e919a0a3bd080b14db9ff
-@senderId = 10
 @commentId = 1
 @userId = 5
 
@@ -15,7 +14,7 @@ Content-Type: application/json
 {
   "title": "first post",
   "body": "karenush",
-  "sender": {{senderId}}
+  "sender": {{userId}}
 }
 
 ###Get all posts
@@ -25,7 +24,7 @@ GET {{baseUrl}}/post
 GET {{baseUrl}}/post/{{postId}}
 
 ###Get posts by sender id
-GET {{baseUrl}}/post?sender={{senderId}}
+GET {{baseUrl}}/post?sender={{userId}}
 
 ###Update post by id
 PUT {{baseUrl}}/post/{{postId}}
@@ -33,8 +32,11 @@ Content-Type: application/json
 {
   "title": "updated title",
   "body": "mayush",
-  "sender": {{senderId}}
+  "sender": {{userId}}
 }
+
+###Delete post by id
+DELETE {{baseUrl}}/post/{{postId}}  
 
 
 
@@ -44,7 +46,7 @@ POST {{baseUrl}}/comment
 Content-Type: application/json
 {
   "postId": {{postId}},
-  "userId": {{userId}},
+  "sender": {{userId}},
   "text": "a comment"
 }
 
@@ -62,7 +64,7 @@ PUT {{baseUrl}}/comment/{{commentId}}
 Content-Type: application/json
 {
   "postId": {{postId}},
-  "userId": {{userId}},
+  "sender": {{userId}},
   "text": "another comment"
 }
 
