@@ -3,14 +3,14 @@ import userController from '../controllers/userController';
 
 const userRouter = Router();
 
-userRouter.post('/', userController.createPost);   
+userRouter.post('/', userController.createUser);   
  
-userRouter.get('/', userController.getAllPosts);
+userRouter.get('/', userController.getAllUsers);
 
-userRouter.get('/:id',userController.getPostById );
+userRouter.get('/:id',userController.getUserById );
 
-userRouter.put('/:id', userController.updatePost );
+userRouter.put('/:id', userController.updateUser );
 
-userRouter.delete('/:id',userController.deletePostById );
+userRouter.delete('/:id',userController.deleteUserById );
 
 export default userRouter;

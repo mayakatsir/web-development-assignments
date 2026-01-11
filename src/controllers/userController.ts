@@ -1,102 +1,84 @@
 import { Request, Response } from 'express';
-import PostRepository from '../repositories/postRepository';
+import UserRepository from '../repositories/userRepository';
 import { isValidObjectId } from 'mongoose';
 
 class UserController {
-    async createPost(req: Request, res: Response) {
+    async createUser(req: Request, res: Response) {
         try {
-            const { sender, content, title } = req.body;
-            if (!sender || !title) {
-                res.status(400).send({ message: 'body param is missing (sender or title)' });
+            const { username, email } = req.body;
+            if (!username || !email) {
+                res.status(400).send({ message: 'body param is missing (username or email)' });
                 return;
             }
-            const post = await PostRepository.createPost(title, sender, content);
-            res.status(200).send(post);
+            const user = await UserRepository.createUser(username,  email);
+            res.status(200).send(user);
         } catch (err) {
-            console.error('Error creating post', err);
-
+            console.error('Error creating user', err);  
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
 
-
-    async getPostById(req: Request, res: Response){
-    try{
-        const { id } = req.params;
-
-        if (!isValidObjectId(id)) {
-            res.status(400).send({ message: `id: ${id} is not valid` });
-            return;
-        }
-
-        const post = await PostRepository.getPostById(id);
-        if (!post) {
-            res.status(404).send({ message: `didn't find post with id: ${id}` });
-            return;
-        }
-
-        res.status(200).send({ post });
-    } catch (err) {
-        console.error('Error getting post by id', err);
-        return res.status(500).json({ message: 'Internal server error' });
-    }
-    };
-    
-    async getAllPosts(req: Request<{}, {}, {}, Record<string, string | undefined>>, res: Response) {
-        try {
-            res.status(200).send({ posts: await PostRepository.getAllPosts(req.query) });
-        } catch (err) {
-            console.error('Failed getting all posts', err);
-        }
-    };
-
-    async updatePost(req: Request, res: Response) {
-        try {
+    async getUserById(req: Request, res: Response){
+        try{
             const { id } = req.params;
-            const { title, content, sender } = req.body;
-
             if (!isValidObjectId(id)) {
                 res.status(400).send({ message: `id: ${id} is not valid` });
                 return;
-            }
-
-            const post = await PostRepository.getPostById(id);
-            if (!post) {
-                res.status(404).send({ message: `didn't find post with id: ${id}` });
-                return;
-            }
-
-            await PostRepository.updatePost(id, title, content, sender);
-            res.status(200).send({ message: 'Post updated successfully' });
-        } catch (err) {
-            console.error('Error updating post', err);
-            return res.status(500).json({ message: 'Internal server error' });
-        }
-    };
-
-    async deletePostById(req: Request, res: Response) {
-        try {
-            const { id } = req.params;   
-
-            if (!isValidObjectId(id)) {
-                res.status(400).send({ message: `id: ${id} is not valid` });
-                return;
-            }
-
-            const post = await PostRepository.getPostById(id);
-
-            if (!post) {
-                res.status(404).send({ message: `didn't find post with id: ${id}` });
+            }       
+            const user = await UserRepository.getUserById(id);
+            if (!user) {
+                res.status(404).send({ message: `didn't find user with id: ${id}` });
                 return;
             }   
-
-            await PostRepository.deletePostById(id);
-            res.status(200).send({ message: 'Post deleted successfully' });
+            res.status(200).send({ user });
         } catch (err) {
-            console.error('Error deleting post', err);
+            console.error('Error getting user by id', err);
             return res.status(500).json({ message: 'Internal server error' });
         }
+    };
+
+
+    async getAllUsers(req: Request<{}, {}, {}, Record<string, string | undefined>>, res: Response) {
+        try {
+            res.status(200).send({ users: await UserRepository.getAllUsers(req.query) });
+        } catch (err) {
+            console.error('Failed getting all users', err);
+        }   
+    };
+
+    
+    async updateUser(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+            const { username, email } = req.body;   
+            if (!isValidObjectId(id)) {
+                res.status(400).send({ message: `id: ${id} is not valid` });
+                return;
+            }
+            await UserRepository.updateUser(id, username, email);
+            res.status(200).send({ message: `Successfully updated user with id: ${id}` });
+        } catch (err) {
+            console.error('Error updating user', err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }           
     }
+
+    async deleteUserById(req: Request, res: Response) {     
+        try {
+            const { id } = req.params;
+            if (!isValidObjectId(id)) {
+                res.status(400).send({ message: `id: ${id} is not valid` });
+                return;
+            }   
+            await UserRepository.deleteUserById(id);
+            res.status(200).send({ message: `Successfully deleted user with id: ${id}` });
+        } catch (err) {
+            console.error('Error deleting user', err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }       
+    }
+
+
 
 }
 
