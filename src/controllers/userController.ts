@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import PostRepository from '../repositories/postRepository';
 import { isValidObjectId } from 'mongoose';
 
-class PostController {
+class UserController {
     async createPost(req: Request, res: Response) {
         try {
             const { sender, content, title } = req.body;
@@ -100,4 +100,4 @@ class PostController {
 
 }
 
-export default new PostController();
+export default new UserController();
