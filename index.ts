@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import postsRouter from './src/routes/postRouter';
 import commentRouter from './src/routes/commentRouter';
-import { initializeDBConnection } from './src/utils/db';
+import { initializeDBConnection } from './src/services/db';
 import dotenv from 'dotenv';
 
 dotenv.config(); 
