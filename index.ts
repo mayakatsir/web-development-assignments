@@ -1,7 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import postsRouter from './src/routes/postRouter';
+import postRouter from './src/routes/postRouter';
 import commentRouter from './src/routes/commentRouter';
+import userRouter from './src/routes/userRouter';
 import { initializeDBConnection } from './src/utils/db';
 import dotenv from 'dotenv';
 
@@ -16,8 +17,9 @@ const main  = async () => {
   app.use(cors());
   app.use(express.json()); 
   
-  app.use("/post", postsRouter);
+  app.use("/post", postRouter);
   app.use("/comment", commentRouter);
+  app.use("/user", userRouter)
   
   app.get('/', (req: Request, res: Response) => {
     res.send({ message: 'API is running' });

@@ -3,7 +3,8 @@
 ### Variables
 @postId = 69624b15206a5ed5ffa9a551
 @commentId = 1
-@userId = 5
+@userId = 6963fe227a5574c476f94bf5
+
 
 
 ########POSTS###########
@@ -73,3 +74,33 @@ Content-Type: application/json
 
 ### Delete a comment
 DELETE {{baseUrl}}/comment/{{commentId}}
+
+########USERS##########
+### Create a new user
+POST {{baseUrl}}/user
+Content-Type: application/json
+
+{
+  "username": "kareni",
+  "email": "karen@gmail.com",
+  "password": "password123"
+}
+
+### Get all users
+GET {{baseUrl}}/user
+
+### Get user by id
+GET {{baseUrl}}/user/{{userId}}
+
+### Update user by id
+PUT {{baseUrl}}/user/{{userId}}
+Content-Type: application/json
+
+{
+  "username": "karen_updated",
+  "email": "gmailupdate",
+  "password": "newpassword123"
+}
+
+### Delete user by id
+DELETE {{baseUrl}}/user/{{userId}}
