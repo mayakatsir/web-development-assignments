@@ -3,7 +3,7 @@
 ### Variables
 @postId = 69624b15206a5ed5ffa9a551
 @commentId = 1
-@userId = 6963f7c2531a7a82a1245548
+@userId = 6963fe227a5574c476f94bf5
 
 
 
@@ -81,7 +81,7 @@ POST {{baseUrl}}/user
 Content-Type: application/json
 
 {
-  "username": "karen",
+  "username": "kareni",
   "email": "karen@gmail.com",
   "password": "password123"
 }

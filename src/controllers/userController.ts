@@ -6,10 +6,17 @@ class UserController {
     async createUser(req: Request, res: Response) {
         try {
             const { username, email, password } = req.body;
+
             if (!username || !email || !password) {
                 res.status(400).send({ message: 'body param is missing (username or email or password)' });
                 return;
             }
+
+            if(await UserRepository.isUsernameExists(username)){
+                res.status(400).send({ message: `username: ${username} already exists` });
+                return;
+            }
+
             const user = await UserRepository.createUser(username,  email, password);
             res.status(200).send(user);
         } catch (err) {
@@ -21,15 +28,19 @@ class UserController {
     async getUserById(req: Request, res: Response){
         try{
             const { id } = req.params;
+
             if (!isValidObjectId(id)) {
                 res.status(400).send({ message: `id: ${id} is not valid` });
                 return;
             }       
+
             const user = await UserRepository.getUserById(id);
+
             if (!user) {
                 res.status(404).send({ message: `didn't find user with id: ${id}` });
                 return;
             }   
+
             res.status(200).send({ user });
         } catch (err) {
             console.error('Error getting user by id', err);
@@ -50,11 +61,18 @@ class UserController {
     async updateUser(req: Request, res: Response) {
         try {
             const { id } = req.params;
-            const { username, email } = req.body;   
+            const { username, email } = req.body; 
+
             if (!isValidObjectId(id)) {
                 res.status(400).send({ message: `id: ${id} is not valid` });
                 return;
             }
+
+            if(await UserRepository.isUsernameExists(username)){
+                res.status(400).send({ message: `username: ${username} already exists` });
+                return;
+            }
+
             await UserRepository.updateUser(id, username, email);
             res.status(200).send({ message: `Successfully updated user with id: ${id}` });
         } catch (err) {
@@ -66,10 +84,12 @@ class UserController {
     async deleteUserById(req: Request, res: Response) {     
         try {
             const { id } = req.params;
+
             if (!isValidObjectId(id)) {
                 res.status(400).send({ message: `id: ${id} is not valid` });
                 return;
             }   
+            
             await UserRepository.deleteUserById(id);
             res.status(200).send({ message: `Successfully deleted user with id: ${id}` });
         } catch (err) {
