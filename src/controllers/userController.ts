@@ -5,12 +5,12 @@ import { isValidObjectId } from 'mongoose';
 class UserController {
     async createUser(req: Request, res: Response) {
         try {
-            const { username, email } = req.body;
-            if (!username || !email) {
-                res.status(400).send({ message: 'body param is missing (username or email)' });
+            const { username, email, password } = req.body;
+            if (!username || !email || !password) {
+                res.status(400).send({ message: 'body param is missing (username or email or password)' });
                 return;
             }
-            const user = await UserRepository.createUser(username,  email);
+            const user = await UserRepository.createUser(username,  email, password);
             res.status(200).send(user);
         } catch (err) {
             console.error('Error creating user', err);  
@@ -38,15 +38,15 @@ class UserController {
     };
 
 
-    async getAllUsers(req: Request<{}, {}, {}, Record<string, string | undefined>>, res: Response) {
+    async getAllUsers(req: Request, res: Response) {
         try {
-            res.status(200).send({ users: await UserRepository.getAllUsers(req.query) });
+            res.status(200).send({ users: await UserRepository.getAllUsers()});
         } catch (err) {
             console.error('Failed getting all users', err);
         }   
     };
 
-    
+
     async updateUser(req: Request, res: Response) {
         try {
             const { id } = req.params;
