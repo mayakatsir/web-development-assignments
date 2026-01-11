@@ -76,16 +76,6 @@ Content-Type: application/json
 DELETE {{baseUrl}}/comment/{{commentId}}
 
 ########USERS##########
-### Create a new user
-POST {{baseUrl}}/user
-Content-Type: application/json
-
-{
-  "username": "kareni",
-  "email": "karen@gmail.com",
-  "password": "password123"
-}
-
 ### Get all users
 GET {{baseUrl}}/user
 
@@ -104,3 +94,41 @@ Content-Type: application/json
 
 ### Delete user by id
 DELETE {{baseUrl}}/user/{{userId}}
+
+
+########AUTH##########
+### Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "KAREN_ITSS",
+  "email": "karenitz@example.com",  
+  "password": "passsssword"
+}
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "KAREN_ITSS",
+  "password": "passsssword"
+}
+
+### Refresh Token
+POST {{baseUrl}}/auth/refresh-token 
+Content-Type: application/json
+
+{
+  "refreshToken": 
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTY0MjYxZWRjYzYyYWYxNmUzMjRkN2YiLCJpYXQiOjE3NjgxNzEwMzgsImV4cCI6MTc2ODE3MjAzOH0.FXrugt42amciUcH0kvwEvq-7hYnZkyBCsX0j1xwovN8"}
+
+### Logout
+POST {{baseUrl}}/auth/logout
+Content-Type: application/json
+
+{
+  "refreshToken": 
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTY0MjYxZWRjYzYyYWYxNmUzMjRkN2YiLCJpYXQiOjE3NjgxNzEwMzgsImV4cCI6MTc2ODE3MjAzOH0.FXrugt42amciUcH0kvwEvq-7hYnZkyBCsX0j1xwovN8"
+}

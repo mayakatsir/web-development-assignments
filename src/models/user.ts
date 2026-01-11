@@ -11,9 +11,12 @@ const userSchema = new Schema({
     required: true
 },
   password: {
-     type: String,
+    type: String,
     required: true
 },
+  refreshToken: {
+    type: [String],
+  },
 });
 
 export const userModel = model('user', userSchema);
