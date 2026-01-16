@@ -2,12 +2,8 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import postRouter from './src/routes/postRouter';
 import commentRouter from './src/routes/commentRouter';
-<<<<<<< HEAD
 import userRouter from './src/routes/userRouter';
-import { initializeDBConnection } from './src/utils/db';
-=======
 import { initializeDBConnection } from './src/services/db';
->>>>>>> 0d0a125935b9e39283bed6b363bbf591ff7d428c
 import dotenv from 'dotenv';
 
 dotenv.config(); 
