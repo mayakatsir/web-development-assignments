@@ -6,6 +6,9 @@ import postRouter from './src/routes/postRouter';
 import userRouter from './src/routes/userRouter';
 import { getConfig } from './src/services/config';
 import { initializeDBConnection } from './src/services/db';
+import userRouter from './src/routes/userRouter';
+import { initializeDBConnection } from './src/utils/db';
+import dotenv from 'dotenv';
 
 const config = getConfig();
 
