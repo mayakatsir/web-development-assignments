@@ -3,28 +3,6 @@ import UserRepository from '../repositories/userRepository';
 import { isValidObjectId } from 'mongoose';
 
 class UserController {
-    async createUser(req: Request, res: Response) {
-        try {
-            const { username, email, password } = req.body;
-
-            if (!username || !email || !password) {
-                res.status(400).send({ message: 'body param is missing (username or email or password)' });
-                return;
-            }
-
-            if(await UserRepository.isUsernameExists(username)){
-                res.status(400).send({ message: `username: ${username} already exists` });
-                return;
-            }
-
-            const user = await UserRepository.createUser(username,  email, password);
-            res.status(200).send(user);
-        } catch (err) {
-            console.error('Error creating user', err);  
-            return res.status(500).json({ message: 'Internal server error' });
-        }
-    }
-
     async getUserById(req: Request, res: Response){
         try{
             const { id } = req.params;
@@ -89,7 +67,7 @@ class UserController {
                 res.status(400).send({ message: `id: ${id} is not valid` });
                 return;
             }   
-            
+
             await UserRepository.deleteUserById(id);
             res.status(200).send({ message: `Successfully deleted user with id: ${id}` });
         } catch (err) {
