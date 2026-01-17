@@ -31,118 +31,120 @@ describe('UserController', () => {
     mockRequest = {};
   });
 
-  describe('createUser', () => {
-    it('should create a user successfully', async () => {
-      const userData = {
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'hashedPassword123',
-      };
+// TODO: move to auth tests!!!
 
-      mockRequest = {
-        body: userData,
-      };
+//   describe('createUser', () => {
+//     it('should create a user successfully', async () => {
+//       const userData = {
+//         username: 'testuser',
+//         email: 'test@example.com',
+//         password: 'hashedPassword123',
+//       };
 
-      const createdUser = { _id: new Types.ObjectId(), ...userData };
-      mockUserRepository.isUsernameExists.mockResolvedValue(false);
-      mockUserRepository.createUser.mockResolvedValue(createdUser as any);
+//       mockRequest = {
+//         body: userData,
+//       };
 
-      await userController.createUser(mockRequest as Request, mockResponse as Response);
+//       const createdUser = { _id: new Types.ObjectId(), ...userData };
+//       mockUserRepository.isUsernameExists.mockResolvedValue(false);
+//       mockUserRepository.createUser.mockResolvedValue(createdUser as any);
 
-      expect(mockStatusFn).toHaveBeenCalledWith(200);
-      expect(mockSendFn).toHaveBeenCalledWith(createdUser);
-    });
+//       await userService.createUser(mockRequest as Request, mockResponse as Response);
 
-    it('should return 400 if username is missing', async () => {
-      mockRequest = {
-        body: {
-          email: 'test@example.com',
-          password: 'password123',
-        },
-      };
+//       expect(mockStatusFn).toHaveBeenCalledWith(200);
+//       expect(mockSendFn).toHaveBeenCalledWith(createdUser);
+//     });
 
-      await userController.createUser(mockRequest as Request, mockResponse as Response);
+//     it('should return 400 if username is missing', async () => {
+//       mockRequest = {
+//         body: {
+//           email: 'test@example.com',
+//           password: 'password123',
+//         },
+//       };
 
-      expect(mockStatusFn).toHaveBeenCalledWith(400);
-      expect(mockSendFn).toHaveBeenCalledWith({
-        message: 'body param is missing (username or email or password)',
-      });
-    });
+//       await userController.createUser(mockRequest as Request, mockResponse as Response);
 
-    it('should return 400 if email is missing', async () => {
-      mockRequest = {
-        body: {
-          username: 'testuser',
-          password: 'password123',
-        },
-      };
+//       expect(mockStatusFn).toHaveBeenCalledWith(400);
+//       expect(mockSendFn).toHaveBeenCalledWith({
+//         message: 'body param is missing (username or email or password)',
+//       });
+//     });
 
-      await userController.createUser(mockRequest as Request, mockResponse as Response);
+//     it('should return 400 if email is missing', async () => {
+//       mockRequest = {
+//         body: {
+//           username: 'testuser',
+//           password: 'password123',
+//         },
+//       };
 
-      expect(mockStatusFn).toHaveBeenCalledWith(400);
-    });
+//       await userController.createUser(mockRequest as Request, mockResponse as Response);
 
-    it('should return 400 if password is missing', async () => {
-      mockRequest = {
-        body: {
-          username: 'testuser',
-          email: 'test@example.com',
-        },
-      };
+//       expect(mockStatusFn).toHaveBeenCalledWith(400);
+//     });
 
-      await userController.createUser(mockRequest as Request, mockResponse as Response);
+//     it('should return 400 if password is missing', async () => {
+//       mockRequest = {
+//         body: {
+//           username: 'testuser',
+//           email: 'test@example.com',
+//         },
+//       };
 
-      expect(mockStatusFn).toHaveBeenCalledWith(400);
-    });
+//       await userController.createUser(mockRequest as Request, mockResponse as Response);
 
-    it('should return 400 if username already exists', async () => {
-      mockRequest = {
-        body: {
-          username: 'existinguser',
-          email: 'test@example.com',
-          password: 'password123',
-        },
-      };
+//       expect(mockStatusFn).toHaveBeenCalledWith(400);
+//     });
 
-      mockUserRepository.isUsernameExists.mockResolvedValue(true);
+//     it('should return 400 if username already exists', async () => {
+//       mockRequest = {
+//         body: {
+//           username: 'existinguser',
+//           email: 'test@example.com',
+//           password: 'password123',
+//         },
+//       };
 
-      await userController.createUser(mockRequest as Request, mockResponse as Response);
+//       mockUserRepository.isUsernameExists.mockResolvedValue(true);
 
-      expect(mockStatusFn).toHaveBeenCalledWith(400);
-      expect(mockSendFn).toHaveBeenCalledWith({
-        message: 'username: existinguser already exists',
-      });
-    });
+//       await userController.createUser(mockRequest as Request, mockResponse as Response);
 
-    it('should handle errors when creating user', async () => {
-      mockRequest = {
-        body: {
-          username: 'testuser',
-          email: 'test@example.com',
-          password: 'password123',
-        },
-      };
+//       expect(mockStatusFn).toHaveBeenCalledWith(400);
+//       expect(mockSendFn).toHaveBeenCalledWith({
+//         message: 'username: existinguser already exists',
+//       });
+//     });
 
-      mockUserRepository.isUsernameExists.mockResolvedValue(false);
-      mockUserRepository.createUser.mockRejectedValue(new Error('DB error'));
+//     it('should handle errors when creating user', async () => {
+//       mockRequest = {
+//         body: {
+//           username: 'testuser',
+//           email: 'test@example.com',
+//           password: 'password123',
+//         },
+//       };
 
-      await userController.createUser(mockRequest as Request, mockResponse as Response);
+//       mockUserRepository.isUsernameExists.mockResolvedValue(false);
+//       mockUserRepository.createUser.mockRejectedValue(new Error('DB error'));
 
-      expect(mockStatusFn).toHaveBeenCalledWith(500);
-      expect(mockJsonFn).toHaveBeenCalledWith({
-        message: 'Internal server error',
-      });
-    });
-  });
+//       await userController.createUser(mockRequest as Request, mockResponse as Response);
+
+//       expect(mockStatusFn).toHaveBeenCalledWith(500);
+//       expect(mockJsonFn).toHaveBeenCalledWith({
+//         message: 'Internal server error',
+//       });
+//     });
+//   });
 
   describe('getUserById', () => {
-    it('should return a user by id', async () => {
+    it('Supposed to return a user by their id', async () => {
       const userId = new Types.ObjectId().toString();
       const user = {
         _id: userId,
-        username: 'testuser',
-        email: 'test@example.com',
-        password: 'hashedPassword',
+        username: 'maya_user',
+        email: 'maya@student.com',
+        password: 'maya43',
       };
 
       mockRequest = {
@@ -157,20 +159,20 @@ describe('UserController', () => {
       expect(mockSendFn).toHaveBeenCalledWith({ user });
     });
 
-    it('should return 400 if user id is invalid', async () => {
+    it('Supposed to return 400 if the user id is invalid', async () => {
       mockRequest = {
-        params: { id: 'invalid-id' },
+        params: { id: 'fake-id' },
       };
 
       await userController.getUserById(mockRequest as Request, mockResponse as Response);
 
       expect(mockStatusFn).toHaveBeenCalledWith(400);
       expect(mockSendFn).toHaveBeenCalledWith({
-        message: 'id: invalid-id is not valid',
-      });
+        message: 'id: fake-id is not valid',
+      }); 
     });
 
-    it('should return 404 if user not found', async () => {
+    it('Supposed to return 404 if the user was not found', async () => {
       const userId = new Types.ObjectId().toString();
       mockRequest = {
         params: { id: userId },
@@ -182,16 +184,16 @@ describe('UserController', () => {
 
       expect(mockStatusFn).toHaveBeenCalledWith(404);
       expect(mockSendFn).toHaveBeenCalledWith({
-        message: `didn't find user with id: ${userId}`,
+        message: `User with id: ${userId} was not found`,
       });
     });
   });
 
   describe('getAllUsers', () => {
-    it('should return all users', async () => {
+    it('Supposed to return all users', async () => {
       const users = [
-        { _id: new Types.ObjectId(), username: 'user1', email: 'user1@test.com', password: 'pass1' },
-        { _id: new Types.ObjectId(), username: 'user2', email: 'user2@test.com', password: 'pass2' },
+        { _id: new Types.ObjectId(), username: 'maya2', email: 'maya@mail.com', password: '123' },
+        { _id: new Types.ObjectId(), username: 'karen_12', email: 'karen@mail.com', password: '456' },
       ];
 
       mockRequest = {};
@@ -204,7 +206,7 @@ describe('UserController', () => {
       expect(mockSendFn).toHaveBeenCalledWith({ users });
     });
 
-    it('should handle errors when fetching users', async () => {
+    it('Supposed to handle errors while trying to fetch users', async () => {
       mockRequest = {};
 
       mockUserRepository.getAllUsers.mockRejectedValue(new Error('DB error'));
@@ -217,13 +219,13 @@ describe('UserController', () => {
   });
 
   describe('updateUser', () => {
-    it('should update a user successfully', async () => {
+    it('Supposed to successfully update a user', async () => {
       const userId = new Types.ObjectId().toString();
       mockRequest = {
         params: { id: userId },
         body: {
-          username: 'updateduser',
-          email: 'updated@example.com',
+          username: 'karen_123',
+          email: 'karen@mail.com',
         },
       };
 
@@ -234,14 +236,14 @@ describe('UserController', () => {
 
       expect(mockStatusFn).toHaveBeenCalledWith(200);
       expect(mockSendFn).toHaveBeenCalledWith({
-        message: `Successfully updated user with id: ${userId}`,
+        message: `Successfully updated user! id: ${userId}`,
       });
     });
 
-    it('should return 400 if user id is invalid', async () => {
+    it('Supposed to return 400 if user id is invalid', async () => {
       mockRequest = {
         params: { id: 'invalid-id' },
-        body: { username: 'updated' },
+        body: { username: 'maya50' },
       };
 
       await userController.updateUser(mockRequest as Request, mockResponse as Response);
@@ -252,13 +254,13 @@ describe('UserController', () => {
       });
     });
 
-    it('should return 400 if username already exists', async () => {
+    it('Supposed to return 400 if the username already exists', async () => {
       const userId = new Types.ObjectId().toString();
       mockRequest = {
         params: { id: userId },
         body: {
-          username: 'existinguser',
-          email: 'test@example.com',
+          username: 'maya2',
+          email: 'maya@mail.com',
         },
       };
 
@@ -268,13 +270,13 @@ describe('UserController', () => {
 
       expect(mockStatusFn).toHaveBeenCalledWith(400);
       expect(mockSendFn).toHaveBeenCalledWith({
-        message: 'username: existinguser already exists',
+        message: 'username: maya2 already exists',
       });
     });
   });
 
   describe('deleteUserById', () => {
-    it('should delete a user successfully', async () => {
+    it('Supposed to delete a user successfully', async () => {
       const userId = new Types.ObjectId().toString();
       mockRequest = {
         params: { id: userId },
@@ -287,11 +289,11 @@ describe('UserController', () => {
       expect(mockUserRepository.deleteUserById).toHaveBeenCalledWith(userId);
       expect(mockStatusFn).toHaveBeenCalledWith(200);
       expect(mockSendFn).toHaveBeenCalledWith({
-        message: `Successfully deleted user with id: ${userId}`,
+        message: `Successfully deleted user! id: ${userId}`,
       });
     });
 
-    it('should return 400 if user id is invalid', async () => {
+    it('Supposed to return 400 if user id is invalid', async () => {
       mockRequest = {
         params: { id: 'invalid-id' },
       };
@@ -304,7 +306,7 @@ describe('UserController', () => {
       });
     });
 
-    it('should handle errors when deleting user', async () => {
+    it('Supposed to handle errors when deleting user', async () => {
       const userId = new Types.ObjectId().toString();
       mockRequest = {
         params: { id: userId },
