@@ -97,7 +97,6 @@ class PostController {
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
-
 }
 
-export const postController = new PostController();
+export default new PostController();
