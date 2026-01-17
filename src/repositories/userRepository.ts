@@ -5,12 +5,16 @@ import { commentModel } from "../models/comment";
 
 class UserRepository {
     async createUser(username: string, email: string, password: string) {
-        await userModel.create({ username, email, password });
+        return await userModel.create({ username, email, password });
     }
 
     async getUserById(id: string) {
         return await userModel.findById(id).select('-__v');
     }   
+
+    async getUserByUsername(username: string) {
+        return await userModel.findOne({ username }).select('-__v');
+    }
 
     async getAllUsers() {  
         return await userModel.find().select('-__v');

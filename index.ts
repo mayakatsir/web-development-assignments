@@ -1,19 +1,19 @@
-import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import postRouter from './src/routes/postRouter';
+import express, { Application, Request, Response } from 'express';
+import authRouter from './src/routes/authRouter';
 import commentRouter from './src/routes/commentRouter';
-<<<<<<< HEAD
+import postRouter from './src/routes/postRouter';
+import userRouter from './src/routes/userRouter';
+import { getConfig } from './src/services/config';
+import { initializeDBConnection } from './src/services/db';
 import userRouter from './src/routes/userRouter';
 import { initializeDBConnection } from './src/utils/db';
-=======
-import { initializeDBConnection } from './src/services/db';
->>>>>>> 0d0a125935b9e39283bed6b363bbf591ff7d428c
 import dotenv from 'dotenv';
 
-dotenv.config(); 
+const config = getConfig();
 
 const app: Application = express();
-const PORT = process.env.PORT || 8080;
+const PORT = config.PORT;
 
 const main  = async () => {
   await initializeDBConnection();
@@ -24,7 +24,8 @@ const main  = async () => {
   app.use("/post", postRouter);
   app.use("/comment", commentRouter);
   app.use("/user", userRouter)
-  
+  app.use("/auth", authRouter)
+
   app.get('/', (req: Request, res: Response) => {
     res.send({ message: 'API is running' });
   });
